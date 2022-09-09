@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="CheckBox" type="CheckBox"]
+margin_right = 55.0
+margin_bottom = 24.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+enabled_focus_mode = 0
+text = "Text"

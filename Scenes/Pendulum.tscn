@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/FlatButton.tscn" type="PackedScene" id=3]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CanvasBG" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0666667, 0.156863, 0.294118, 1 )
+
+[node name="Sidebar" type="Control" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -254.0
+
+[node name="SidebarBG" type="ColorRect" parent="CanvasLayer/Sidebar"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.329412, 0, 0, 1 )
+
+[node name="LengthLabel" type="Label" parent="CanvasLayer/Sidebar"]
+margin_left = 16.0
+margin_top = 134.0
+margin_right = 81.0
+margin_bottom = 148.0
+text = "Length /m"
+
+[node name="LengthSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
+margin_left = 16.0
+margin_top = 159.0
+margin_right = 162.0
+margin_bottom = 175.0
+min_value = 0.5
+max_value = 2.0
+step = 0.01
+value = 1.5
+tick_count = 0
+
+[node name="LengthLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+margin_left = 178.0
+margin_top = 151.0
+margin_right = 236.0
+margin_bottom = 181.0
+text = "1.5"
+max_length = 4
+
+[node name="StartButton" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
+margin_left = 89.0
+margin_top = 449.0
+margin_right = 130.0
+margin_bottom = 469.0
+text = "Start"

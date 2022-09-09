@@ -11,7 +11,15 @@ config_version=4
 [application]
 
 config/name="PhysBox"
+run/main_scene="res://Scenes/Pendulum.tscn"
+boot_splash/show_image=false
 config/icon="res://Assets/icon.png"
+
+[display]
+
+window/size/width=960
+window/size/height=540
+window/stretch/aspect="expand"
 
 [gui]
 

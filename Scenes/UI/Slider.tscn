@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="Slider" type="HSlider"]
+margin_right = 146.0
+margin_bottom = 16.0
+focus_mode = 0
+mouse_default_cursor_shape = 6
+step = 10.0
+value = 60.0
+scrollable = false
+tick_count = 11
+ticks_on_borders = true
