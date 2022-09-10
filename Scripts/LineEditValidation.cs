@@ -14,6 +14,7 @@ public class LineEditValidation : LineEdit {
     }
 
     private void ValidateInput(string newText) {
+        GD.Print("Validating line edit input...");
         if (inputFormat != "Text" && newText != "" && newText != "-" && newText != "+") {
             int newCaretPosition = CaretPosition;
             bool invalidInput = false;

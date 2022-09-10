@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/FlatButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/SliderLineEdit.cs" type="Script" id=4]
 
 [node name="Spatial" type="Spatial"]
 
@@ -52,9 +53,15 @@ text = "1.5"
 max_length = 4
 inputFormat = "Decimal"
 
+[node name="SliderLineEdit" type="Node" parent="CanvasLayer/Sidebar/LengthLineEdit"]
+script = ExtResource( 4 )
+targetSliderPath = NodePath("../../LengthSlider")
+
 [node name="StartButton" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
 margin_left = 89.0
 margin_top = 449.0
 margin_right = 130.0
 margin_bottom = 469.0
+focus_mode = 2
+enabled_focus_mode = 2
 text = "Start"
