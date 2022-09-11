@@ -1,24 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/FlatButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/RangeLineEdit.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Pendulum.cs" type="Script" id=5]
 
 [node name="Spatial" type="Spatial"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CanvasBG" type="ColorRect" parent="CanvasLayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.0666667, 0.156863, 0.294118, 1 )
-
 [node name="Sidebar" type="Control" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -254.0
+margin_left = -281.0
 
 [node name="SidebarBG" type="ColorRect" parent="CanvasLayer/Sidebar"]
 visible = false
@@ -27,30 +23,45 @@ anchor_bottom = 1.0
 color = Color( 0.329412, 0, 0, 1 )
 
 [node name="LengthLabel" type="Label" parent="CanvasLayer/Sidebar"]
-margin_left = 16.0
-margin_top = 134.0
-margin_right = 81.0
-margin_bottom = 148.0
+anchor_left = 0.0629921
+anchor_top = 0.248148
+anchor_right = 0.337013
+anchor_bottom = 0.285185
+margin_right = -3.81496
+margin_bottom = -6.0
 text = "Length /m"
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="LengthSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
-margin_left = 16.0
-margin_top = 159.0
-margin_right = 162.0
-margin_bottom = 175.0
+anchor_left = 0.0629921
+anchor_top = 0.294444
+anchor_right = 0.637795
+anchor_bottom = 0.324074
+margin_right = 0.0
+margin_bottom = 1.52588e-05
 min_value = 0.5
 max_value = 2.0
 step = 0.01
 value = 1.5
 tick_count = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="LengthLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
-margin_left = 178.0
-margin_top = 151.0
-margin_right = 236.0
-margin_bottom = 181.0
+anchor_left = 0.66548
+anchor_top = 0.27963
+anchor_right = 0.914591
+anchor_bottom = 0.335185
+margin_right = 0.0
+margin_bottom = -1.52588e-05
 text = "1.5"
 max_length = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
 inputFormat = "Decimal"
 
 [node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/LengthLineEdit"]
@@ -58,10 +69,40 @@ script = ExtResource( 4 )
 targetRangePath = NodePath("../../LengthSlider")
 
 [node name="StartButton" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
-margin_left = 89.0
-margin_top = 449.0
-margin_right = 130.0
-margin_bottom = 469.0
+anchor_left = 0.409253
+anchor_top = 0.833333
+anchor_right = 0.58363
+anchor_bottom = 0.881481
+margin_right = 0.0
+margin_bottom = 0.0
 focus_mode = 2
 enabled_focus_mode = 2
 text = "Start"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64682, -0.855361, 3.52992 )
+projection = 1
+size = 4.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.95634, -1.95946e-08, -0.292255, 0.100532, 0.938974, 0.328969, 0.27442, -0.343987, 0.897979, -2.71573, 1.25572, 5.37209 )
+light_energy = 1.5
+
+[node name="Pendulum" type="Spatial" parent="."]
+transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0, 0 )
+script = ExtResource( 5 )
+
+[node name="Rod" type="CSGCylinder" parent="Pendulum"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0 )
+radius = 0.01
+height = 1.5
+sides = 15
+
+[node name="Sphere" type="CSGSphere" parent="Pendulum"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.625, 0 )
+radius = 0.125
+radial_segments = 20
+rings = 20
