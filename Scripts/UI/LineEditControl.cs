@@ -1,7 +1,11 @@
 using Godot;
 using System;
 
-public class LineEditValidation : LineEdit {
+public class LineEditControl : LineEdit {
+
+    [Export] private NodePath simulationControllerPath;
+    private Node simulationController;
+    [Export] bool disableDuringSimulation = false;
 
     private String oldText;
 
@@ -9,8 +13,22 @@ public class LineEditValidation : LineEdit {
     private string inputFormat = "Text";
 
     public override void _Ready() {
+        if (disableDuringSimulation) {
+            simulationController = GetNode(simulationControllerPath);
+            simulationController.Connect("SimulationStarted", this, "OnSimulationStart");
+            simulationController.Connect("SimulationStopped", this, "OnSimulationStop");
+        }
+
         this.Connect("text_changed" , this, "ValidateInput");
         oldText = Text;
+    }
+
+    private void OnSimulationStart() {
+        Editable = false;
+    }
+
+    private void OnSimulationStop() {
+        Editable = true;
     }
 
     private void ValidateInput(string newText) {

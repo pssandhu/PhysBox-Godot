@@ -7,6 +7,9 @@ public class Pendulum : Spatial {
 
     private bool simulationActive = false;
 
+    [Signal] public delegate void SimulationStarted();
+    [Signal] public delegate void SimulationStopped();
+
     private double timestep;
 
     private double theta;
@@ -51,12 +54,14 @@ public class Pendulum : Spatial {
     public void StartSimulation() {
         theta = ToRad(initialPosition);
         velocity = 0;
+        EmitSignal("SimulationStarted");
         simulationActive = true;
     }
 
     public void StopSimulation() {
         simulationActive = false;
         RotationDegrees = new Vector3(0, 0, initialPosition);
+        EmitSignal("SimulationStopped");
     }
 
     public void SetInitialPosition(float value) {

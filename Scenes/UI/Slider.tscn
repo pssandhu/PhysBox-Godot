@@ -1,12 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/SliderControl.cs" type="Script" id=1]
 
 [node name="Slider" type="HSlider"]
 margin_right = 146.0
 margin_bottom = 16.0
 focus_mode = 0
-mouse_default_cursor_shape = 6
+mouse_default_cursor_shape = 2
 step = 10.0
 value = 60.0
 scrollable = false
 tick_count = 11
 ticks_on_borders = true
+script = ExtResource( 1 )

@@ -3,8 +3,7 @@ using System;
 
 public class RangeLineEdit : Node {
 
-    [Export]
-    private NodePath targetRangePath;
+    [Export] private NodePath targetRangePath;
     private Range targetRange;
     private LineEdit lineEdit;
 

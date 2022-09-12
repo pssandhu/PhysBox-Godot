@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/ButtonControl.cs" type="Script" id=1]
 
 [node name="FlatButton" type="Button"]
 margin_right = 86.0
@@ -8,3 +10,4 @@ mouse_default_cursor_shape = 2
 enabled_focus_mode = 0
 text = "Button Text"
 flat = true
+script = ExtResource( 1 )

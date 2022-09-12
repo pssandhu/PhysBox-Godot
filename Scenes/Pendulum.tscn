@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/FlatButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scripts/RangeLineEdit.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/UI/RangeLineEdit.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Pendulum.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/UI/CheckBox.tscn" type="PackedScene" id=6]
 
 [node name="Spatial" type="Spatial"]
 
@@ -22,13 +23,62 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.329412, 0, 0, 1 )
 
+[node name="InitialPositionLabel" type="Label" parent="CanvasLayer/Sidebar"]
+anchor_left = 0.0629922
+anchor_top = 0.135185
+anchor_right = 0.671533
+anchor_bottom = 0.172222
+margin_right = -47.0
+text = "Initial Position /°"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="InitialPositionSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
+anchor_left = 0.0629922
+anchor_top = 0.181481
+anchor_right = 0.637795
+anchor_bottom = 0.211111
+margin_right = 0.0
+margin_bottom = 0.0
+min_value = -179.0
+max_value = 179.0
+step = 1.0
+value = -30.0
+tick_count = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="InitialPositionLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+anchor_left = 0.66548
+anchor_top = 0.166667
+anchor_right = 0.914591
+anchor_bottom = 0.222222
+margin_right = 0.0
+margin_bottom = 0.000305176
+text = "-30"
+max_length = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+inputFormat = "Decimal"
+
+[node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/InitialPositionLineEdit"]
+script = ExtResource( 4 )
+targetRangePath = NodePath("../../InitialPositionSlider")
+
 [node name="LengthLabel" type="Label" parent="CanvasLayer/Sidebar"]
 anchor_left = 0.0629921
 anchor_top = 0.248148
 anchor_right = 0.337013
 anchor_bottom = 0.285185
-margin_right = -3.81496
-margin_bottom = -6.0
+margin_right = -3.81509
+margin_bottom = -6.00002
 text = "Length /m"
 __meta__ = {
 "_edit_use_anchors_": true
@@ -49,6 +99,8 @@ tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
 
 [node name="LengthLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
 anchor_left = 0.66548
@@ -62,25 +114,144 @@ max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
 }
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
 inputFormat = "Decimal"
 
 [node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/LengthLineEdit"]
 script = ExtResource( 4 )
 targetRangePath = NodePath("../../LengthSlider")
 
+[node name="MassLabel" type="Label" parent="CanvasLayer/Sidebar"]
+anchor_left = 0.0640569
+anchor_top = 0.361111
+anchor_right = 0.323843
+anchor_bottom = 0.398148
+text = "Mass /kg"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="MassSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
+anchor_left = 0.0629921
+anchor_top = 0.407407
+anchor_right = 0.637795
+anchor_bottom = 0.437037
+margin_right = 0.0
+margin_bottom = 1.52588e-05
+min_value = 0.5
+max_value = 20.0
+step = 0.5
+value = 1.0
+tick_count = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="MassLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+anchor_left = 0.66548
+anchor_top = 0.392593
+anchor_right = 0.914591
+anchor_bottom = 0.448149
+margin_right = 0.0
+margin_bottom = -1.52588e-05
+text = "1"
+max_length = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+inputFormat = "Decimal"
+
+[node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/MassLineEdit"]
+script = ExtResource( 4 )
+targetRangePath = NodePath("../../MassSlider")
+
+[node name="DampingLabel" type="Label" parent="CanvasLayer/Sidebar"]
+anchor_left = 0.0640569
+anchor_top = 0.474074
+anchor_right = 0.316726
+anchor_bottom = 0.511111
+margin_bottom = -3.05176e-05
+text = "Damping"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="DampingSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
+anchor_left = 0.0629921
+anchor_top = 0.52037
+anchor_right = 0.637795
+anchor_bottom = 0.55
+margin_right = 0.0
+margin_bottom = 1.52588e-05
+max_value = 1.0
+step = 0.01
+value = 0.0
+tick_count = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="DampingLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+anchor_left = 0.66548
+anchor_top = 0.505556
+anchor_right = 0.914591
+anchor_bottom = 0.561112
+margin_right = 0.0
+margin_bottom = -1.52588e-05
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+inputFormat = "Decimal"
+
+[node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/DampingLineEdit"]
+script = ExtResource( 4 )
+targetRangePath = NodePath("../../DampingSlider")
+
 [node name="StartButton" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
 anchor_left = 0.409253
 anchor_top = 0.833333
 anchor_right = 0.58363
 anchor_bottom = 0.881481
-margin_right = 0.0
-margin_bottom = 0.0
+margin_left = 3.05176e-05
+margin_right = 9.15527e-05
+margin_bottom = 9.15527e-05
 focus_mode = 2
 enabled_focus_mode = 2
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="CheckBox" parent="CanvasLayer/Sidebar" instance=ExtResource( 6 )]
+anchor_left = 0.231317
+anchor_top = 0.598148
+anchor_right = 0.772242
+anchor_bottom = 0.681482
+margin_right = 0.0
+margin_bottom = -3.05176e-05
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="Label" parent="CanvasLayer/Sidebar/CheckBox" index="0"]
+margin_left = 29.0
+margin_top = -21.5
+margin_right = 150.0
+margin_bottom = 21.5
+text = "Use small angle approximation"
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64682, -0.855361, 3.52992 )
@@ -106,3 +277,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.625, 0 )
 radius = 0.125
 radial_segments = 20
 rings = 20
+
+[editable path="CanvasLayer/Sidebar/CheckBox"]
