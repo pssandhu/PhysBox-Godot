@@ -217,7 +217,7 @@ inputFormat = "Decimal"
 script = ExtResource( 4 )
 targetRangePath = NodePath("../../DampingSlider")
 
-[node name="CheckBox" parent="CanvasLayer/Sidebar" instance=ExtResource( 6 )]
+[node name="SmallAngleCheckBox" parent="CanvasLayer/Sidebar" instance=ExtResource( 6 )]
 anchor_left = 0.231317
 anchor_top = 0.598148
 anchor_right = 0.772242
@@ -231,7 +231,7 @@ __meta__ = {
 simulationControllerPath = NodePath("../../../Pendulum")
 disableDuringSimulation = true
 
-[node name="Label" parent="CanvasLayer/Sidebar/CheckBox" index="0"]
+[node name="Label" parent="CanvasLayer/Sidebar/SmallAngleCheckBox" index="0"]
 margin_left = 29.0
 margin_top = -21.5
 margin_right = 150.0
@@ -256,6 +256,12 @@ light_energy = 1.5
 [node name="Pendulum" type="Spatial" parent="."]
 transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 5 )
+initialPositionSliderPath = NodePath("../CanvasLayer/Sidebar/InitialPositionSlider")
+lengthSliderPath = NodePath("../CanvasLayer/Sidebar/LengthSlider")
+massSliderPath = NodePath("../CanvasLayer/Sidebar/MassSlider")
+dampingSliderPath = NodePath("../CanvasLayer/Sidebar/DampingSlider")
+smallAngleCheckBoxPath = NodePath("../CanvasLayer/Sidebar/SmallAngleCheckBox")
+startStopPath = NodePath("../CanvasLayer/Sidebar/StartStop")
 
 [node name="Rod" type="CSGCylinder" parent="Pendulum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0 )
@@ -269,4 +275,4 @@ radius = 0.125
 radial_segments = 20
 rings = 20
 
-[editable path="CanvasLayer/Sidebar/CheckBox"]
+[editable path="CanvasLayer/Sidebar/SmallAngleCheckBox"]

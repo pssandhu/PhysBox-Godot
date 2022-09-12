@@ -5,6 +5,23 @@ using static PhysBox.Utils;
 
 public class Pendulum : Spatial {
 
+    private CSGCylinder rod;
+    private CSGSphere sphere;
+
+    [Export] private NodePath initialPositionSliderPath;
+    [Export] private NodePath lengthSliderPath;
+    [Export] private NodePath massSliderPath;
+    [Export] private NodePath dampingSliderPath;
+    [Export] private NodePath smallAngleCheckBoxPath;
+    [Export] private NodePath startStopPath;
+
+    private Slider initialPositionSlider;
+    private Slider lengthSlider;
+    private Slider massSlider;
+    private Slider dampingSlider;
+    private Button smallAngleCheckBox;
+    private StartStopButtons startStop;
+
     private bool simulationActive = false;
 
     [Signal] public delegate void SimulationStarted();
@@ -19,7 +36,6 @@ public class Pendulum : Spatial {
     // Length of rod in metres
     // To change default, min, and max length change the slider properties in the inspector
     private double length;
-    private float sphereRadius;
 
     // Initial position of pendulum in degrees
     // To change default, min, and max initial position change the slider properties in the inspector
@@ -30,19 +46,39 @@ public class Pendulum : Spatial {
     private double damping;
 
     public override void _Ready() {
-        sphereRadius = 0.125f;
-        length = 1.5;
-        mass = 1;
-        damping = 0.5;
-        SetInitialPosition(-150);
-        StartSimulation();
+        rod = GetChild<CSGCylinder>(0);
+        sphere = GetChild<CSGSphere>(1);
+
+        initialPositionSlider = GetNode<Slider>(initialPositionSliderPath);
+        lengthSlider = GetNode<Slider>(lengthSliderPath);
+        massSlider = GetNode<Slider>(massSliderPath);
+        dampingSlider = GetNode<Slider>(dampingSliderPath);
+        smallAngleCheckBox = GetNode<Button>(smallAngleCheckBoxPath);
+        startStop = GetNode<StartStopButtons>(startStopPath);
+
+        SetLength((float)lengthSlider.Value);
+        SetMass((float)massSlider.Value);
+        SetDamping((float)dampingSlider.Value);
+        SetInitialPosition((float)initialPositionSlider.Value);
+
+        // Connect to signals. Can do this in the editor if desired
+        initialPositionSlider.Connect("value_changed", this, "SetInitialPosition");
+        lengthSlider.Connect("value_changed", this, "SetLength");
+        massSlider.Connect("value_changed", this, "SetMass");
+        dampingSlider.Connect("value_changed", this, "SetDamping");
+        startStop.startButton.Connect("pressed", this, "StartSimulation");
+        startStop.stopButton.Connect("pressed", this, "StopSimulation");
     }
 
     public override void _PhysicsProcess(float delta) {
         if (simulationActive) {
             timestep = delta;
 
-            acceleration = -g / length * Math.Sin(theta) - damping / mass * velocity;
+            if (smallAngleCheckBox.Pressed) {
+                 acceleration = -g / length * theta - damping / mass * velocity;
+            } else {
+                acceleration = -g / length * Math.Sin(theta) - damping / mass * velocity;
+            }
 
             velocity += acceleration * timestep;
             double deltaTheta = velocity * timestep;
@@ -67,6 +103,27 @@ public class Pendulum : Spatial {
     public void SetInitialPosition(float value) {
         initialPosition = value;
         RotationDegrees = new Vector3(0, 0, value);
+    }
+
+    public void SetLength(float value) {
+        length = value;
+        rod.Height = value;
+
+        Vector3 temp = rod.Translation;
+        temp.y = -1 * value / 2;
+        rod.Translation = temp;
+
+        temp = sphere.Translation;
+        temp.y = -1 * (value + sphere.Radius);
+        sphere.Translation = temp;
+    }
+
+    public void SetMass(float value) {
+        mass = value;
+    }
+
+    public void SetDamping(float value) {
+        damping = value;
     }
 
 }
