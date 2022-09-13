@@ -14,6 +14,7 @@ public class Pendulum : Spatial {
     [Export] private NodePath dampingSliderPath;
     [Export] private NodePath smallAngleCheckBoxPath;
     [Export] private NodePath startStopPath;
+    [Export] private NodePath measuredPeriodLabelPath;
 
     private Slider initialPositionSlider;
     private Slider lengthSlider;
@@ -21,6 +22,7 @@ public class Pendulum : Spatial {
     private Slider dampingSlider;
     private Button smallAngleCheckBox;
     private StartStopButtons startStop;
+    private Label measuredPeriodLabel;
 
     private bool simulationActive = false;
 
@@ -32,6 +34,10 @@ public class Pendulum : Spatial {
     private double theta;
     private double velocity;
     private double acceleration;
+
+    private double measuredPeriod;
+    private bool stopwatchActive;
+    private int initialVelocitySign;
 
     // Length of rod in metres
     // To change default, min, and max length change the slider properties in the inspector
@@ -55,6 +61,7 @@ public class Pendulum : Spatial {
         dampingSlider = GetNode<Slider>(dampingSliderPath);
         smallAngleCheckBox = GetNode<Button>(smallAngleCheckBoxPath);
         startStop = GetNode<StartStopButtons>(startStopPath);
+        measuredPeriodLabel = GetNode<Label>(measuredPeriodLabelPath);
 
         // Set max damping to less than the lowest damping needed for critical damping based on
         // the range of simulation parameters. Also round it to match the slider Step
@@ -89,18 +96,38 @@ public class Pendulum : Spatial {
             double deltaTheta = velocity * timestep;
             theta += deltaTheta;
             RotateZ((float)deltaTheta);
+
+            if (stopwatchActive) {
+                GD.Print("delta: " + timestep);
+                // GD.Print("Velocity: " + velocity);
+                measuredPeriod += timestep * 2;
+
+                // Simulation is not accurate enough for velocity to reach exactly zero so check for reversal in velocity direction
+                if ((int)(velocity/Math.Abs(velocity)) != initialVelocitySign) {
+                    stopwatchActive = false;
+                    // Subtract on average half a timestep to account for when the velocity was actually zero
+                    measuredPeriod -= 0.5 * timestep;
+                    GD.Print("Measured period: " + measuredPeriod);    
+                }
+
+                measuredPeriodLabel.Text = "Measured Period: " + measuredPeriod.ToString("0.0000") + " s";
+            }
         }
     }
 
     public void StartSimulation() {
         theta = ToRad(initialPosition);
         velocity = 0;
+        measuredPeriod = 0;
+        initialVelocitySign = -1 * (int)(initialPosition/Mathf.Abs(initialPosition));
+        stopwatchActive = true;
         EmitSignal("SimulationStarted");
         simulationActive = true;
     }
 
     public void StopSimulation() {
         simulationActive = false;
+        stopwatchActive = false;
         RotationDegrees = new Vector3(0, 0, initialPosition);
         EmitSignal("SimulationStopped");
     }

@@ -218,9 +218,9 @@ script = ExtResource( 4 )
 targetRangePath = NodePath("../../DampingSlider")
 
 [node name="SmallAngleCheckBox" parent="CanvasLayer/Sidebar" instance=ExtResource( 6 )]
-anchor_left = 0.231317
+anchor_left = 0.227758
 anchor_top = 0.598148
-anchor_right = 0.772242
+anchor_right = 0.768683
 anchor_bottom = 0.681482
 margin_right = 0.0
 margin_bottom = -3.05176e-05
@@ -240,9 +240,20 @@ text = "Use small angle approximation"
 
 [node name="StartStop" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
 anchor_left = 0.384342
-anchor_top = 0.753704
+anchor_top = 0.725926
 anchor_right = 0.558719
-anchor_bottom = 0.801852
+anchor_bottom = 0.774074
+
+[node name="MeasuredPeriodLabel" type="Label" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -211.0
+margin_top = -53.0
+margin_right = -74.0
+margin_bottom = -33.0
+text = "Measured Period: "
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64682, -0.855361, 3.52992 )
@@ -262,6 +273,7 @@ massSliderPath = NodePath("../CanvasLayer/Sidebar/MassSlider")
 dampingSliderPath = NodePath("../CanvasLayer/Sidebar/DampingSlider")
 smallAngleCheckBoxPath = NodePath("../CanvasLayer/Sidebar/SmallAngleCheckBox")
 startStopPath = NodePath("../CanvasLayer/Sidebar/StartStop")
+measuredPeriodLabelPath = NodePath("../CanvasLayer/MeasuredPeriodLabel")
 
 [node name="Rod" type="CSGCylinder" parent="Pendulum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0 )
