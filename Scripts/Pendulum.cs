@@ -3,7 +3,7 @@ using System;
 using static PhysBox.Constants;
 using static PhysBox.Utils;
 
-public class Pendulum : Spatial {
+public class Pendulum : Spatial, ISimulationController {
 
     private CSGCylinder rod;
     private CSGSphere sphere;
@@ -15,6 +15,7 @@ public class Pendulum : Spatial {
     [Export] private NodePath smallAngleCheckBoxPath;
     [Export] private NodePath startStopPath;
     [Export] private NodePath measuredPeriodLabelPath;
+    [Export] private NodePath timeControlsPath;
 
     private Slider initialPositionSlider;
     private Slider lengthSlider;
@@ -23,12 +24,23 @@ public class Pendulum : Spatial {
     private Button smallAngleCheckBox;
     private StartStopButtons startStop;
     private Label measuredPeriodLabel;
+    private TimeControls timeControls;
 
     private bool simulationActive = false;
 
     [Signal] public delegate void SimulationStarted();
     [Signal] public delegate void SimulationStopped();
 
+    public double Timestep {
+        get {
+            return timestep;
+        }
+        set {
+            timestep = value;
+        }
+    }
+
+    // TODO: Improve naming convention
     private double timestep;
 
     private double theta;
@@ -62,6 +74,7 @@ public class Pendulum : Spatial {
         smallAngleCheckBox = GetNode<Button>(smallAngleCheckBoxPath);
         startStop = GetNode<StartStopButtons>(startStopPath);
         measuredPeriodLabel = GetNode<Label>(measuredPeriodLabelPath);
+        timeControls = GetNode<TimeControls>(timeControlsPath);
 
         // Set max damping to less than the lowest damping needed for critical damping based on
         // the range of simulation parameters. Also round it to match the slider Step
@@ -84,7 +97,10 @@ public class Pendulum : Spatial {
 
     public override void _PhysicsProcess(float delta) {
         if (simulationActive) {
-            timestep = delta;
+            if (timeControls.Realtime) {
+                // Get current deltaTime
+                timestep = delta;
+            }
 
             if (smallAngleCheckBox.Pressed) {
                  acceleration = -g / length * theta - damping / mass * velocity;

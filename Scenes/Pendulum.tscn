@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/UI/RangeLineEdit.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/Pendulum.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/CheckBox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/TimeControls.tscn" type="PackedScene" id=7]
 
 [node name="Spatial" type="Spatial"]
 
@@ -255,6 +256,27 @@ margin_right = -74.0
 margin_bottom = -33.0
 text = "Measured Period: "
 
+[node name="TimeControls" parent="CanvasLayer" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 4.0
+margin_right = 321.0
+margin_bottom = 94.0
+simulationControllerPath = NodePath("../../Pendulum")
+
+[node name="RealtimeCheckBox" parent="CanvasLayer/TimeControls" index="0"]
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="RealtimeStepSlider" parent="CanvasLayer/TimeControls" index="2"]
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
+[node name="TimestepSlider" parent="CanvasLayer/TimeControls" index="6"]
+simulationControllerPath = NodePath("../../../Pendulum")
+disableDuringSimulation = true
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64682, -0.855361, 3.52992 )
 projection = 1
@@ -274,6 +296,7 @@ dampingSliderPath = NodePath("../CanvasLayer/Sidebar/DampingSlider")
 smallAngleCheckBoxPath = NodePath("../CanvasLayer/Sidebar/SmallAngleCheckBox")
 startStopPath = NodePath("../CanvasLayer/Sidebar/StartStop")
 measuredPeriodLabelPath = NodePath("../CanvasLayer/MeasuredPeriodLabel")
+timeControlsPath = NodePath("../CanvasLayer/TimeControls")
 
 [node name="Rod" type="CSGCylinder" parent="Pendulum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0 )
@@ -288,3 +311,5 @@ radial_segments = 20
 rings = 20
 
 [editable path="CanvasLayer/Sidebar/SmallAngleCheckBox"]
+[editable path="CanvasLayer/TimeControls"]
+[editable path="CanvasLayer/TimeControls/RealtimeCheckBox"]
