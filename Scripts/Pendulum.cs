@@ -56,6 +56,11 @@ public class Pendulum : Spatial {
         smallAngleCheckBox = GetNode<Button>(smallAngleCheckBoxPath);
         startStop = GetNode<StartStopButtons>(startStopPath);
 
+        // Set max damping to less than the lowest damping needed for critical damping based on
+        // the range of simulation parameters. Also round it to match the slider Step
+        double lowestCriticalDamping = 2 * massSlider.MinValue * Math.Sqrt(g / lengthSlider.MaxValue);
+        dampingSlider.MaxValue = Math.Round((lowestCriticalDamping - dampingSlider.Step) / dampingSlider.Step) * dampingSlider.Step;
+
         SetLength((float)lengthSlider.Value);
         SetMass((float)massSlider.Value);
         SetDamping((float)dampingSlider.Value);
