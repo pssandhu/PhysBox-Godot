@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Pendulum.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/CheckBox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/UI/TimeControls.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/UI/BackButton.tscn" type="PackedScene" id=8]
 
 [node name="Spatial" type="Spatial"]
 
@@ -276,6 +277,14 @@ disableDuringSimulation = true
 [node name="TimestepSlider" parent="CanvasLayer/TimeControls" index="6"]
 simulationControllerPath = NodePath("../../../Pendulum")
 disableDuringSimulation = true
+
+[node name="BackButton" parent="CanvasLayer" instance=ExtResource( 8 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 28.0
+margin_top = -49.0
+margin_right = 77.0
+margin_bottom = -23.0
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64682, -0.855361, 3.52992 )

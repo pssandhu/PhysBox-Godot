@@ -58,4 +58,5 @@
 # Collapse files on GitHub
 *.tscn linguist-generated
 *.tres linguist-generated
+*.import linguist-generated
 

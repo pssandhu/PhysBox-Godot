@@ -1,0 +1,139 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/UI/FlatButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/ActivityButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=3]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+selectActivityLabelPath = NodePath("CanvasLayer/Sidebar/SelectActivityLabel")
+descriptionLabelPath = NodePath("CanvasLayer/Sidebar/DescriptionLabel")
+openButtonPath = NodePath("CanvasLayer/Sidebar/OpenButton")
+quitButtonPath = NodePath("CanvasLayer/QuitButton")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.376471, 0.654902, 0.737255, 1 )
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer"]
+margin_left = 26.0
+margin_top = 16.0
+margin_right = 91.0
+margin_bottom = 36.0
+text = "PhysBox"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -454.0
+margin_top = -207.0
+margin_right = 198.0
+margin_bottom = 186.0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer"]
+margin_right = 652.0
+margin_bottom = 393.0
+rect_min_size = Vector2( 0, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="PendulumButton" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
+margin_right = 215.0
+margin_bottom = 195.0
+sceneName = "Pendulum"
+buttonText = "Pendulum"
+activityDescription = "A simple pendulum"
+
+[node name="ActivityButton2" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 219.0
+margin_right = 434.0
+margin_bottom = 195.0
+
+[node name="ActivityButton3" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
+margin_left = 438.0
+margin_right = 652.0
+margin_bottom = 195.0
+
+[node name="ActivityButton4" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
+margin_top = 199.0
+margin_right = 215.0
+margin_bottom = 393.0
+
+[node name="Sidebar" type="Control" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -263.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Sidebar"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.286275, 0.286275, 0.286275, 1 )
+
+[node name="SelectActivityLabel" type="Label" parent="CanvasLayer/Sidebar"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -86.5
+margin_top = -133.0
+margin_right = 87.5
+margin_bottom = -90.0
+text = "Select an activity to see details"
+align = 1
+autowrap = true
+
+[node name="DescriptionLabel" type="Label" parent="CanvasLayer/Sidebar"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -157.0
+margin_right = 74.0
+margin_bottom = -1.0
+text = "Description Text"
+autowrap = true
+
+[node name="OpenButton" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -79.0
+margin_top = -57.0
+margin_right = -27.0
+margin_bottom = -31.0
+text = "Open"
+
+[node name="FilterButton" parent="CanvasLayer" instance=ExtResource( 1 )]
+anchor_left = 0.558333
+anchor_top = 0.916667
+anchor_right = 0.610417
+anchor_bottom = 0.964815
+margin_right = 0.0
+margin_bottom = 0.0
+text = "Filter"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="QuitButton" parent="CanvasLayer" instance=ExtResource( 1 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 26.0
+margin_top = -45.0
+margin_right = 69.0
+margin_bottom = -19.0
+text = "Quit"
