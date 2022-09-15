@@ -114,7 +114,8 @@ public class Pendulum : Spatial, ISimulationController {
             RotateZ((float)deltaTheta);
 
             if (stopwatchActive) {
-                GD.Print("delta: " + timestep);
+                GD.Print("timestep: " + timestep);
+                GD.Print("delta: " + delta);
                 // GD.Print("Velocity: " + velocity);
                 measuredPeriod += timestep * 2;
 

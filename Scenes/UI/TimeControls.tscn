@@ -32,10 +32,10 @@ margin_left = 117.0
 margin_top = 37.0
 margin_right = 263.0
 margin_bottom = 53.0
-min_value = 0.001
-max_value = 1.0
-step = 0.001
-value = 0.01
+min_value = 1.0
+max_value = 1000.0
+step = 1.0
+value = 10.0
 tick_count = 0
 
 [node name="StepFrequencyLabel" type="Label" parent="."]
@@ -72,10 +72,9 @@ margin_left = 163.0
 margin_top = 66.0
 margin_right = 309.0
 margin_bottom = 82.0
-min_value = 0.001
-max_value = 0.1
-step = 0.001
-value = 0.01
+min_value = 0.1
+step = 0.1
+value = 10.0
 tick_count = 0
 
 [editable path="RealtimeCheckBox"]

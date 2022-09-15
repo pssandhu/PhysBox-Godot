@@ -62,10 +62,10 @@ public class TimeControls : Control {
 
     private void UpdateTimeSettings(float value) {
         if (realtimeCheckBox.Pressed) {
-            simulationController.Timestep = realtimeStepSlider.Value;
-            Engine.IterationsPerSecond = (int)(1 / realtimeStepSlider.Value);
+            simulationController.Timestep = realtimeStepSlider.Value / 1000;
+            Engine.IterationsPerSecond = (int)(1 / (realtimeStepSlider.Value / 1000));
         } else {
-            simulationController.Timestep = timestepSlider.Value;
+            simulationController.Timestep = timestepSlider.Value / 1000;
             Engine.IterationsPerSecond = (int)stepFrequencySlider.Value;
         }
     }
