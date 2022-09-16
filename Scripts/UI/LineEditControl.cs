@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class LineEditControl : LineEdit {
 
@@ -7,10 +6,9 @@ public class LineEditControl : LineEdit {
     private Node simulationController;
     [Export] bool disableDuringSimulation = false;
 
-    private String oldText;
+    private string oldText;
 
-    [Export(PropertyHint.Enum, "Text,Integer,Decimal")]
-    private string inputFormat = "Text";
+    [Export(PropertyHint.Enum, "Text,Integer,Decimal")] private string inputFormat = "Text";
 
     public override void _Ready() {
         if (disableDuringSimulation) {
@@ -57,7 +55,7 @@ public class LineEditControl : LineEdit {
                 }
             } else {
                 // Remove leading and trailing spaces
-                String trimmedText = newText.TrimStart();
+                string trimmedText = newText.TrimStart();
                 bool startTrimmed = newText != trimmedText;
                 trimmedText = trimmedText.TrimEnd();
 

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public class MainMenu : Control {
 
@@ -34,9 +33,9 @@ public class MainMenu : Control {
         }
     }
 
-    public void PreviewActivity(string sceneName, string activityDescription) {
-        if (SelectedActivityScene != sceneName) {
-            SelectedActivityScene = sceneName;
+    public void PreviewActivity(string scenePath, string activityDescription) {
+        if (SelectedActivityScene != scenePath) {
+            SelectedActivityScene = scenePath;
             DescriptionLabel.Text = activityDescription;
             SelectActivityLabel.Visible = false;
             DescriptionLabel.Visible = true;
@@ -46,8 +45,7 @@ public class MainMenu : Control {
 
     private void LoadSelectedActivity() {
         GD.Print("Loading scene: " + SelectedActivityScene);
-        // TODO: Don't hardcode scene folder path. Perhaps find a way to export scene path
-        GetTree().ChangeScene("res://Scenes/" + SelectedActivityScene + ".tscn");
+        GetTree().ChangeScene(SelectedActivityScene);
     }
 
     private void QuitApplication() {

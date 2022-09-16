@@ -91,8 +91,8 @@ public class Pendulum : Spatial, ISimulationController {
         lengthSlider.Connect("value_changed", this, "SetLength");
         massSlider.Connect("value_changed", this, "SetMass");
         dampingSlider.Connect("value_changed", this, "SetDamping");
-        startStop.startButton.Connect("pressed", this, "StartSimulation");
-        startStop.stopButton.Connect("pressed", this, "StopSimulation");
+        startStop.StartButton.Connect("pressed", this, "StartSimulation");
+        startStop.StopButton.Connect("pressed", this, "StopSimulation");
     }
 
     public override void _PhysicsProcess(float delta) {
@@ -132,7 +132,7 @@ public class Pendulum : Spatial, ISimulationController {
         }
     }
 
-    public void StartSimulation() {
+    private void StartSimulation() {
         theta = ToRad(initialPosition);
         velocity = 0;
         measuredPeriod = 0;
@@ -142,7 +142,7 @@ public class Pendulum : Spatial, ISimulationController {
         simulationActive = true;
     }
 
-    public void StopSimulation() {
+    private void StopSimulation() {
         simulationActive = false;
         stopwatchActive = false;
         RotationDegrees = new Vector3(0, 0, initialPosition);

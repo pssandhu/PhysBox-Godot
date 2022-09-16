@@ -48,7 +48,7 @@ columns = 3
 [node name="PendulumButton" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
 margin_right = 215.0
 margin_bottom = 195.0
-sceneName = "Pendulum"
+scenePath = "res://Scenes/Pendulum.tscn"
 buttonText = "Pendulum"
 activityDescription = "A simple pendulum"
 
