@@ -52,10 +52,13 @@ scenePath = "res://Scenes/Pendulum.tscn"
 buttonText = "Pendulum"
 activityDescription = "A simple pendulum"
 
-[node name="ActivityButton2" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
+[node name="HangingMassOnSpringButton" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
 margin_left = 219.0
 margin_right = 434.0
 margin_bottom = 195.0
+scenePath = "res://Scenes/HangingMassOnSpring.tscn"
+buttonText = "Hanging mass on spring"
+activityDescription = "A mass hanging on a spring"
 
 [node name="ActivityButton3" parent="CanvasLayer/ScrollContainer/GridContainer" instance=ExtResource( 2 )]
 margin_left = 438.0

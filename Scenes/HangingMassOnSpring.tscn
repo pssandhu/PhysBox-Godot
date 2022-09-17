@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/UI/LineEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Slider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/StartStop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/UI/RangeLineEdit.cs" type="Script" id=4]
-[ext_resource path="res://Scripts/Pendulum.cs" type="Script" id=5]
-[ext_resource path="res://Scenes/UI/CheckBox.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/UI/TimeControls.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/HangingMassOnSpring.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/BackButton.tscn" type="PackedScene" id=8]
 
 [node name="Spatial" type="Spatial"]
@@ -31,7 +29,7 @@ anchor_top = 0.135185
 anchor_right = 0.671533
 anchor_bottom = 0.172222
 margin_right = -47.0
-text = "Initial Position /°"
+text = "Initial Position /m"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -43,15 +41,14 @@ anchor_right = 0.637795
 anchor_bottom = 0.211111
 margin_right = 0.0
 margin_bottom = 0.0
-min_value = -179.0
-max_value = 179.0
-step = 1.0
-value = -30.0
+max_value = 0.5
+step = 0.01
+value = 0.0
 tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 
 [node name="InitialPositionLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
@@ -61,14 +58,14 @@ anchor_right = 0.914591
 anchor_bottom = 0.222222
 margin_right = 0.0
 margin_bottom = 0.000305176
-text = "-30"
+text = "0"
 max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
-inputFormat = "Integer"
+inputFormat = "Decimal"
 
 [node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/InitialPositionLineEdit"]
 script = ExtResource( 4 )
@@ -101,7 +98,7 @@ tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 
 [node name="LengthLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
@@ -116,7 +113,7 @@ max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 inputFormat = "Decimal"
 
@@ -149,7 +146,7 @@ tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 
 [node name="MassLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
@@ -164,7 +161,7 @@ max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 inputFormat = "Decimal"
 
@@ -197,7 +194,7 @@ tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 
 [node name="DampingLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
@@ -211,7 +208,7 @@ text = "0"
 __meta__ = {
 "_edit_use_anchors_": true
 }
-simulationControllerPath = NodePath("../../../Pendulum")
+simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 inputFormat = "Decimal"
 
@@ -219,64 +216,11 @@ inputFormat = "Decimal"
 script = ExtResource( 4 )
 targetRangePath = NodePath("../../DampingSlider")
 
-[node name="SmallAngleCheckBox" parent="CanvasLayer/Sidebar" instance=ExtResource( 6 )]
-anchor_left = 0.227758
-anchor_top = 0.598148
-anchor_right = 0.768683
-anchor_bottom = 0.681482
-margin_right = 0.0
-margin_bottom = -3.05176e-05
-pressed = true
-__meta__ = {
-"_edit_use_anchors_": true
-}
-simulationControllerPath = NodePath("../../../Pendulum")
-disableDuringSimulation = true
-
-[node name="Label" parent="CanvasLayer/Sidebar/SmallAngleCheckBox" index="0"]
-margin_left = 29.0
-margin_top = -21.5
-margin_right = 150.0
-margin_bottom = 21.5
-text = "Use small angle approximation"
-
 [node name="StartStop" parent="CanvasLayer/Sidebar" instance=ExtResource( 3 )]
 anchor_left = 0.384342
 anchor_top = 0.725926
 anchor_right = 0.558719
 anchor_bottom = 0.774074
-
-[node name="MeasuredPeriodLabel" type="Label" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -211.0
-margin_top = -53.0
-margin_right = -74.0
-margin_bottom = -33.0
-text = "Measured Period: "
-
-[node name="TimeControls" parent="CanvasLayer" instance=ExtResource( 7 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 7.0
-margin_top = 4.0
-margin_right = 321.0
-margin_bottom = 94.0
-simulationControllerPath = NodePath("../../Pendulum")
-
-[node name="RealtimeCheckBox" parent="CanvasLayer/TimeControls" index="0"]
-simulationControllerPath = NodePath("../../../Pendulum")
-disableDuringSimulation = true
-
-[node name="RealtimeStepSlider" parent="CanvasLayer/TimeControls" index="2"]
-simulationControllerPath = NodePath("../../../Pendulum")
-disableDuringSimulation = true
-
-[node name="TimestepSlider" parent="CanvasLayer/TimeControls" index="6"]
-simulationControllerPath = NodePath("../../../Pendulum")
-disableDuringSimulation = true
 
 [node name="BackButton" parent="CanvasLayer" instance=ExtResource( 8 )]
 anchor_top = 1.0
@@ -295,30 +239,23 @@ size = 4.0
 transform = Transform( 0.95634, -1.95946e-08, -0.292255, 0.100532, 0.938974, 0.328969, 0.27442, -0.343987, 0.897979, -2.71573, 1.25572, 5.37209 )
 light_energy = 1.5
 
-[node name="Pendulum" type="Spatial" parent="."]
-transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0, 0 )
+[node name="MassOnSpring" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 5 )
 initialPositionSliderPath = NodePath("../CanvasLayer/Sidebar/InitialPositionSlider")
 lengthSliderPath = NodePath("../CanvasLayer/Sidebar/LengthSlider")
 massSliderPath = NodePath("../CanvasLayer/Sidebar/MassSlider")
 dampingSliderPath = NodePath("../CanvasLayer/Sidebar/DampingSlider")
-smallAngleCheckBoxPath = NodePath("../CanvasLayer/Sidebar/SmallAngleCheckBox")
 startStopPath = NodePath("../CanvasLayer/Sidebar/StartStop")
-measuredPeriodLabelPath = NodePath("../CanvasLayer/MeasuredPeriodLabel")
-timeControlsPath = NodePath("../CanvasLayer/TimeControls")
 
-[node name="Rod" type="CSGCylinder" parent="Pendulum"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0 )
+[node name="Spring" type="CSGCylinder" parent="MassOnSpring"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0 )
 radius = 0.01
-height = 1.5
+height = 0.1
 sides = 15
 
-[node name="Sphere" type="CSGSphere" parent="Pendulum"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.625, 0 )
+[node name="Sphere" type="CSGSphere" parent="MassOnSpring"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.225, 0 )
 radius = 0.125
 radial_segments = 20
 rings = 20
-
-[editable path="CanvasLayer/Sidebar/SmallAngleCheckBox"]
-[editable path="CanvasLayer/TimeControls"]
-[editable path="CanvasLayer/TimeControls/RealtimeCheckBox"]
