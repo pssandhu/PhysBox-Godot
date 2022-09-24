@@ -41,9 +41,12 @@ anchor_right = 0.637795
 anchor_bottom = 0.211111
 margin_right = 0.0
 margin_bottom = 0.0
-max_value = 0.5
+rect_scale = Vector2( -1, 1 )
+rect_pivot_offset = Vector2( 80.76, 0 )
+min_value = -1.0
+max_value = 1.0
 step = 0.01
-value = 0.0
+value = -0.2
 tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
@@ -58,7 +61,7 @@ anchor_right = 0.914591
 anchor_bottom = 0.222222
 margin_right = 0.0
 margin_bottom = 0.000305176
-text = "0"
+text = "-0.2"
 max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
@@ -71,29 +74,29 @@ inputFormat = "Decimal"
 script = ExtResource( 4 )
 targetRangePath = NodePath("../../InitialPositionSlider")
 
-[node name="LengthLabel" type="Label" parent="CanvasLayer/Sidebar"]
+[node name="SpingConstantLabel" type="Label" parent="CanvasLayer/Sidebar"]
 anchor_left = 0.0629921
 anchor_top = 0.248148
 anchor_right = 0.337013
 anchor_bottom = 0.285185
 margin_right = -3.81509
 margin_bottom = -6.00002
-text = "Length /m"
+text = "Sping Constant /N.m^-1"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="LengthSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
+[node name="SpringConstantSlider" parent="CanvasLayer/Sidebar" instance=ExtResource( 2 )]
 anchor_left = 0.0629921
 anchor_top = 0.294444
 anchor_right = 0.637795
 anchor_bottom = 0.324074
 margin_right = 0.0
 margin_bottom = 1.52588e-05
-min_value = 0.5
-max_value = 2.0
-step = 0.01
-value = 1.5
+min_value = 1.0
+max_value = 20.0
+step = 0.1
+value = 9.0
 tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
@@ -101,14 +104,14 @@ __meta__ = {
 simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 
-[node name="LengthLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
+[node name="SpringConstantLineEdit" parent="CanvasLayer/Sidebar" instance=ExtResource( 1 )]
 anchor_left = 0.66548
 anchor_top = 0.27963
 anchor_right = 0.914591
 anchor_bottom = 0.335185
 margin_right = 0.0
 margin_bottom = -1.52588e-05
-text = "1.5"
+text = "9"
 max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
@@ -117,9 +120,9 @@ simulationControllerPath = NodePath("../../../MassOnSpring")
 disableDuringSimulation = true
 inputFormat = "Decimal"
 
-[node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/LengthLineEdit"]
+[node name="RangeLineEdit" type="Node" parent="CanvasLayer/Sidebar/SpringConstantLineEdit"]
 script = ExtResource( 4 )
-targetRangePath = NodePath("../../LengthSlider")
+targetRangePath = NodePath("../../SpringConstantSlider")
 
 [node name="MassLabel" type="Label" parent="CanvasLayer/Sidebar"]
 anchor_left = 0.0640569
@@ -140,8 +143,8 @@ margin_right = 0.0
 margin_bottom = 1.52588e-05
 min_value = 0.5
 max_value = 20.0
-step = 0.5
-value = 1.0
+step = 0.1
+value = 0.8
 tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
@@ -156,7 +159,7 @@ anchor_right = 0.914591
 anchor_bottom = 0.448149
 margin_right = 0.0
 margin_bottom = -1.52588e-05
-text = "1"
+text = "0.8"
 max_length = 4
 __meta__ = {
 "_edit_use_anchors_": true
@@ -189,7 +192,7 @@ margin_right = 0.0
 margin_bottom = 1.52588e-05
 max_value = 1.0
 step = 0.01
-value = 0.0
+value = 0.3
 tick_count = 0
 __meta__ = {
 "_edit_use_anchors_": true
@@ -204,7 +207,7 @@ anchor_right = 0.914591
 anchor_bottom = 0.561112
 margin_right = 0.0
 margin_bottom = -1.52588e-05
-text = "0"
+text = "0.3"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -240,10 +243,9 @@ transform = Transform( 0.95634, -1.95946e-08, -0.292255, 0.100532, 0.938974, 0.3
 light_energy = 1.5
 
 [node name="MassOnSpring" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 5 )
 initialPositionSliderPath = NodePath("../CanvasLayer/Sidebar/InitialPositionSlider")
-lengthSliderPath = NodePath("../CanvasLayer/Sidebar/LengthSlider")
+springConstantSliderPath = NodePath("../CanvasLayer/Sidebar/SpringConstantSlider")
 massSliderPath = NodePath("../CanvasLayer/Sidebar/MassSlider")
 dampingSliderPath = NodePath("../CanvasLayer/Sidebar/DampingSlider")
 startStopPath = NodePath("../CanvasLayer/Sidebar/StartStop")
@@ -256,6 +258,6 @@ sides = 15
 
 [node name="Sphere" type="CSGSphere" parent="MassOnSpring"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.225, 0 )
-radius = 0.125
+radius = 0.05
 radial_segments = 20
 rings = 20

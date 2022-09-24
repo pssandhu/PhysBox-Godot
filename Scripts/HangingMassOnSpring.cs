@@ -8,13 +8,13 @@ public class HangingMassOnSpring : Spatial {
     private CSGSphere sphere;
 
     [Export] private NodePath initialPositionSliderPath;
-    [Export] private NodePath lengthSliderPath;
+    [Export] private NodePath springConstantSliderPath;
     [Export] private NodePath massSliderPath;
     [Export] private NodePath dampingSliderPath;
     [Export] private NodePath startStopPath;
 
     private Slider initialPositionSlider;
-    private Slider lengthSlider;
+    private Slider springConstantSlider;
     private Slider massSlider;
     private Slider dampingSlider;
     private StartStopButtons startStop;
@@ -46,21 +46,21 @@ public class HangingMassOnSpring : Spatial {
         sphere = GetChild<CSGSphere>(1);
 
         initialPositionSlider = GetNode<Slider>(initialPositionSliderPath);
-        lengthSlider = GetNode<Slider>(lengthSliderPath);
+        springConstantSlider = GetNode<Slider>(springConstantSliderPath);
         massSlider = GetNode<Slider>(massSliderPath);
         dampingSlider = GetNode<Slider>(dampingSliderPath);
         startStop = GetNode<StartStopButtons>(startStopPath);
 
-        // Set max damping?
+        // TODO: Set max damping?
 
-        springConstant = 10;
+        SetSpringConstant((float)springConstantSlider.Value);
         SetMass((float)massSlider.Value);
         SetDamping((float)dampingSlider.Value);
         SetInitialPosition((float)initialPositionSlider.Value);
 
         // Connect to signals. Can do this in the editor if desired
         initialPositionSlider.Connect("value_changed", this, "SetInitialPosition");
-        lengthSlider.Connect("value_changed", this, "SetLength");
+        springConstantSlider.Connect("value_changed", this, "SetSpringConstant");
         massSlider.Connect("value_changed", this, "SetMass");
         dampingSlider.Connect("value_changed", this, "SetDamping");
         startStop.StartButton.Connect("pressed", this, "StartSimulation");
@@ -71,7 +71,7 @@ public class HangingMassOnSpring : Spatial {
         if (simulationActive) {
             timestep = delta;
 
-            acceleration = -g * mass - springConstant * displacement;
+            acceleration = -g * mass - springConstant * displacement - damping / mass * velocity;
             velocity += acceleration * timestep;
             double deltaDisplacement = velocity * timestep;
             displacement += deltaDisplacement;
@@ -88,7 +88,7 @@ public class HangingMassOnSpring : Spatial {
 
     private void StopSimulation() {
         simulationActive = false;
-        //MoveSpring(initialPosition);
+        MoveSpring(initialPosition);
         EmitSignal("SimulationStopped");
     }
 
@@ -99,9 +99,19 @@ public class HangingMassOnSpring : Spatial {
 
     public void MoveSpring(double newDisplacement) {
         spring.Height = (float)Math.Abs(newDisplacement);
+        RotationDegrees = new Vector3(0, 0, newDisplacement < 0 ? 0 : 180);
+
         Vector3 temp = spring.Translation;
         temp.y = -1 * spring.Height / 2;
         spring.Translation = temp;
+
+        temp = sphere.Translation;
+        temp.y = -1 * spring.Height;
+        sphere.Translation = temp;
+    }
+
+    public void SetSpringConstant(float value) {
+        springConstant = value;
     }
 
     public void SetMass(float value) {

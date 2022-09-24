@@ -31,6 +31,8 @@ public class MainMenu : Control {
         if (OS.GetName() == "HTML5") {
             quitButton.Visible = false;
         }
+
+        Engine.IterationsPerSecond = 60;
     }
 
     public void PreviewActivity(string scenePath, string activityDescription) {
